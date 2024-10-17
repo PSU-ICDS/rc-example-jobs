@@ -8,4 +8,6 @@
 
 module load ansys
 
-fluent 2ddp -t${SLURM_NTASKS} -i in.file -g
+FLUENTNODES="$(scontrol show hostnames)"
+
+fluent 2ddp -t${SLURM_NTASKS} -i in.file -cnf=$FLUENTNODES -g
