@@ -1,0 +1,33 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=4gb
+#SBATCH --time=00:10:00
+#SBATCH --job-name=conda_plot_lib
+#SBATCH --error=conda_plot_lib.%J.err
+#SBATCH --output=conda_plot_lib.%J.out
+
+module purge
+module load anaconda3
+
+# Activating Conda and checking if the environment exists
+source ~/.bashrc
+conda init bash
+
+# Check if the environment "test_env" exists
+if conda env list | grep -q "test_env"; then
+    echo "Conda environment 'test_env' already exists."
+else
+    echo "Conda environment 'test_env' does not exist. Creating environment..."
+    bash conda_plot_lib_create_env.sh  # Run the script to create the environment
+fi
+
+# Activate the environment after ensuring it exists
+echo "Activating test_env"
+conda activate test_env
+
+echo "Running conda plot example"
+# Run your code that uses the conda environment
+python conda_plot_lib_example.py
+
+echo "Done"
