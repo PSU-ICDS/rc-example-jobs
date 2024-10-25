@@ -1,0 +1,33 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
+#SBATCH --time=10:00
+#SBATCH --mem=16gb
+#SBATCH --partition=open
+#SBATCH --output=R-parallel_%j.out
+#SBATCH --error=R-parallel_%j.err
+
+# Load R
+module purge
+module load r/4.4.0
+
+# Run the serial R script
+start_serial=$(date +%s)
+Rscript serial_computation.R > serial_computation_$SLURM_JOB_ID.log
+end_serial=$(date +%s)
+serial_time=$(( end_serial - start_serial ))
+echo "Serial computation time: $serial_time seconds" >> serial_computation_$SLURM_JOB_ID.log
+
+# Run the parallel R script
+start_parallel=$(date +%s)
+Rscript parallel_computation.R > parallel_computation_$SLURM_JOB_ID.log
+end_parallel=$(date +%s)
+parallel_time=$(( end_parallel - start_parallel ))
+echo "Parallel computation time: $parallel_time seconds" >> parallel_computation_$SLURM_JOB_ID.log
+
+# Summary
+echo "Serial vs Parallel Computation Time" >> summary_$SLURM_JOB_ID.log
+echo "-----------------------------------" >> summary_$SLURM_JOB_ID.log
+echo "Serial:   $serial_time seconds" >> summary_$SLURM_JOB_ID.log
+echo "Parallel: $parallel_time seconds" >> summary_$SLURM_JOB_ID.log
+
