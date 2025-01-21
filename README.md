@@ -32,7 +32,7 @@ Here is a list of links and tutorial video that will be helpful to you if you ar
 
 # Contributing
 
-If you would like to contribute to this repository, such as adding a new example job, make an update to an existing example job, open an issue, or even suggest an enhancement to this repository, then please read through this repository's CONTRIBUTING file for more info.
+If you would like to contribute to this repository, such as adding a new example job, make an update to an existing example job, open an issue, or even suggest an enhancement to this repository, then please read through this repository's [CONTRIBUTING file](./CONTRIBUTING.md) for more info.
 
 
 # License
