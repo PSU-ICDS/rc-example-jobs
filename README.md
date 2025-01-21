@@ -2,7 +2,7 @@
 
 * [Overview](#overview)
 * [Helpful Links and Tutorials](#helpful-links-and-tutorials)
-* [Contributing](#contributing)
+* [Contributing](./CONTRIBUTING.md)
 * [License](#license)
 * [Troubleshooting](#troubleshooting)
 
