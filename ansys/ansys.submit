@@ -3,11 +3,12 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=10:00
 #SBATCH --mem=10gb
-#SBATCH --account=open
+#SBATCH --account=test_credits_iask
+#SBATCH --partition=standard
 #SBATCH --output=ansys.%j.out
 #SBATCH --error=ansys.%j.err
 
 module load ansys/2023R2
 
-ansys232 -b -i example.inp -o example.out
+ansys232 -b -np $SLURM_NTASKS -i example.inp -o example.out
 
