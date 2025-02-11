@@ -1,0 +1,34 @@
+! Example ANSYS MAPDL Input File - Cantilever Beam
+
+/PREP7  ! Enter preprocessor
+
+! Define material properties
+MP,EX,1,2E11  ! Young's modulus (Pa)
+MP,PRXY,1,0.3 ! Poisson’s ratio
+
+! Define geometry
+BL,0,1,0.1,0.1  ! Create a block: X=1m, Y=0.1m, Z=0.1m
+
+! Define element type and material
+ET,1,SOLID185  ! 3D solid element
+TYPE,1
+MAT,1
+
+! Meshing
+ESIZE,0.05  ! Element size
+VMESH,ALL   ! Mesh the volume
+
+! Define boundary conditions
+D,1,ALL,0  ! Fix one end of the beam (cantilever)
+
+! Apply load
+F,2,FZ,-1000  ! Apply a force of -1000N at the free end
+
+/SOLU  ! Enter solution phase
+SOLVE  ! Solve the analysis
+FINISH ! Finish solution
+
+/POST1  ! Enter post-processing
+PLDISP,2 ! Plot deformed shape
+
+FINISH ! Exit MAPDL

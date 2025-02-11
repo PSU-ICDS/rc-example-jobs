@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --ntasks=20
+#SBATCH --time=10:00
+#SBATCH --mem=10gb
+#SBATCH --account=open
+#SBATCH --output=ansys.%j.out
+#SBATCH --error=ansys.%j.err
+
+module load ansys/2023R2
+module load openmpi
+
+ansys232 -mpi openmpi -np $SLURM_NTASKS -b -i example.inp -o example.out
