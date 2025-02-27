@@ -13,4 +13,4 @@ module load starccm/17.06.008-R8 openmpi
 
 scontrol show hostname $SLURM_NODELIST > machinefile.txt
 
-starccm+ -batch -np $SLURM_NTASKS -mpi openmpi -machinefile machinefile.txt test.sim
+starccm+ -server -np $SLURM_NTASKS -mpi openmpi -machinefile machinefile.txt test.sim
