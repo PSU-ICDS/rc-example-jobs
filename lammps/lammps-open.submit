@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=4
+#SBATCH --mem=8GB
+#SBATCH --time=10:00
+#SBATCH --output=lammps.%j.out
+#SBATCH --error=lammps.%j.err
+#SBATCH --job-name=lammps_example
+#SBATCH --account=support_cr_default
+#SBATCH --partition=standard
+#SBATCH --constraint=icelake
+
+module load lammps/open-20240829
+
+mpirun -np ${SLURM_NTASKS} lmp -in lj_basic.in
+

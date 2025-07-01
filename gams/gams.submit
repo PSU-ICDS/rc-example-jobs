@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=4
+#SBATCH --mem=8GB
+#SBATCH --time=10:00
+#SBATCH --output=gams.%j.out
+#SBATCH --error=gams.%j.err
+#SBATCH --job-name=gams_example
+#SBATCH --account=open
+#SBATCH --partition=open
+
+module load gams
+
+gams example.gms
