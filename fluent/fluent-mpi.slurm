@@ -11,4 +11,4 @@ module load ansys openmpi
 
 srun hostname | sort | uniq -c | awk '{print $2":"$1}' > fluent.cfg
 
-fluent 2ddp -t${SLURM_NTASKS} -i in.file -mpi=openmpi -cnf=fluent.cfg -g
+fluent 2ddp -t ${SLURM_NTASKS} -i in.file -mpi=openmpi -cnf=fluent.cfg -g
