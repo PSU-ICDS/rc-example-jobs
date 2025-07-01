@@ -6,9 +6,7 @@
 #SBATCH --output=lammps.%j.out
 #SBATCH --error=lammps.%j.err
 #SBATCH --job-name=lammps_example
-#SBATCH --account=support_cr_default
-#SBATCH --partition=standard
-#SBATCH --constraint=icelake
+#SBATCH --account=open
 
 module load lammps/open-20240829
 
