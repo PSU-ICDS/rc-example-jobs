@@ -2,3 +2,4 @@
 /**/*.err
 /**/*.log
 /**/output/*
+/**/machinefile.txt
