@@ -9,6 +9,6 @@
 #SBATCH --output=starccm.%j.out
 #SBATCH --output=starccm.%j.err
 
-module load starccm/17.06.008-R8
+module load starccm/2502.0001
 
 starccm+ -batch -np $SLURM_NTASKS test.sim

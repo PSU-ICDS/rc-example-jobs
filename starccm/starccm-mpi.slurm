@@ -9,7 +9,7 @@
 #SBATCH --output=starccm-mpi.%j.out
 #SBATCH --error=starccm-mpi.%j.err
 
-module load starccm/17.06.008-R8 openmpi
+module load starccm/2502.0001 openmpi
 
 scontrol show hostname $SLURM_NODELIST > machinefile.txt
 
