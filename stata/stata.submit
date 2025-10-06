@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH --job-name=stata_test
+#SBATCH --time=00:05:00
+#SBATCH --ntasks-per-node=4
+#SBATCH --nodes=1
+#SBATCH --mem=2G
+#SBATCH --output=stata_test_%j.out
+#SBATCH --error=stata_test_%j.err
+#SBATCH --partition=open
+
+# Load Stata module (adjust to your cluster)
+module load stata/19
+
+# Run Stata in batch (non-interactive) mode
+stata-se -b do auto_analysis.do
