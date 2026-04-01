@@ -1,4 +1,6 @@
 #!/bin/bash
+#SBATCH --partition=basic
+#SBATCH --account=open
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=1gb

@@ -3,7 +3,8 @@
 #SBATCH --ntasks-per-node=4
 #SBATCH --time=10:00
 #SBATCH --mem=16gb
-#SBATCH --partition=open
+#SBATCH --partition=basic
+#SBATCH --account=open
 #SBATCH --output=R-parallel_%j.out
 #SBATCH --error=R-parallel_%j.err
 

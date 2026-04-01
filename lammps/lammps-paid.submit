@@ -7,7 +7,7 @@
 #SBATCH --error=lammps.%j.err
 #SBATCH --job-name=lammps_example
 #SBATCH --account=acct_id          # replace acct_id with your credit or allocation account id
-#SBATCH --partition=sla_prio       # use sla-prio for allocations, change to "standard", "basic" or "himem" for credit accts
+#SBATCH --partition=sla_prio       # use sla-prio for allocations, change to "standard", "basic", "interactive" or "himem" for credit accts
 #SBATCH --constraint=icelake
 
 module load lammps/20240829

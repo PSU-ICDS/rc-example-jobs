@@ -5,7 +5,8 @@
 #SBATCH --ntasks-per-node=6 
 #SBATCH --mem-per-cpu=4GB
 #SBATCH --time=01:00:00 
-#SBATCH --partition=open 
+#SBATCH --partition=basic
+#SBATCH --account=open
 #SBATCH --output=starccm-mpi.%j.out
 #SBATCH --error=starccm-mpi.%j.err
 

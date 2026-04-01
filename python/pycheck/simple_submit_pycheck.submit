@@ -3,12 +3,13 @@
 #### Scheduler Directives ####
 
 #SBATCH -A open
+#SBATCH -p basic
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -t 00:01:00
 #SBATCH --mem=1gb
-#SBATCH -o out_pycheck.txt
-
+#SBATCH -o pycheck_%j.out
+#SBATCH -e pycheck_%j.err
 
 #### Job is launched when placed on compute nodes ####
 echo " "

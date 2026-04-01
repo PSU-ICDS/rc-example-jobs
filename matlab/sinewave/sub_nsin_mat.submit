@@ -2,12 +2,13 @@
 
 #SBATCH --job-name=nsin_mat
 #SBATCH --account=open
-#SBATCH --partition=open
+#SBATCH --partition=basic
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=2
 #SBATCH --mem-per-cpu=1GB
 #SBATCH --time=00:01:00
-#SBATCH --output=%x.%j.out
+#SBATCH --output=nsin_mat.%j.out
+#SBATCH --error=nsin_mat.%j.err
 
 module load matlab
 matlab -batch read_nsin

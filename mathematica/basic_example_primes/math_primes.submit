@@ -5,8 +5,11 @@
 #SBATCH --time=00:10:00
 #SBATCH --ntasks=1
 #SBATCH --input=none
+#SBATCH --account=open
+#SBATCH --partition=basic
 #SBATCH --output=math_primes_%j.out
 #SBATCH --error=math_primes_%j.err
 
 module load mathematica
 math -run < math_primes.m
+
