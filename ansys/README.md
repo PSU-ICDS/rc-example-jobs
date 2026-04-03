@@ -16,19 +16,19 @@ This directory contains example SLURM submission scripts for running ANSYS jobs 
 
 Submit the serial job with:
 ```bash
-qsub ansys.submit
+sbatch ansys.submit
 ```
 
 For checking job status:
 ```bash
-qstat -f <job_id>
+scontrol show job <jobid>
 ```
 
 ### MPI Parallel Job
 
 Submit the MPI job with:
 ```bash
-qsub ansys-mpi.submit
+sbatch ansys-mpi.submit
 ```
 
 ## Script Breakdown
