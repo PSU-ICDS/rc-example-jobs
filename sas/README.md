@@ -1,35 +1,46 @@
-# SAS Paired T-Test on Slurm HPC
+# SAS Job Example for ICDS Roar Collab Cluster
 
-This repository contains a sample workflow for running a SAS analysis on the Roar ICDS cluster. The example performs a paired t-test on a small dataset.
+## Overview
+This directory contains an example SLURM submission script for running SAS (Statistical Analysis System) on the Roar Collab cluster. SAS is a powerful software suite used for advanced analytics, multivariate analysis, business intelligence, and data management.
 
-## Repository Structure
-
-* `t-test.sas`: The SAS program containing the data and the `PROC TTEST` analysis.
-* `sas.submit`: A Slurm batch script configured to load the SAS module and execute the analysis.
-
-## Analysis Overview
-
-The SAS script (`t-test.sas`) performs the following:
-1.  **Data Ingestion**: Creates a dataset named `pulse` with `pre` and `post` measurements.
-2.  **Data Verification**: Uses `proc print` to output the dataset to the log/listing.
-3.  **Statistical Analysis**: Uses `proc ttest` with the `paired` statement to compare the means of the two related groups.
+## Files
+- `sas.submit` - SLURM submission script for executing SAS in batch mode.
+- `t-test.sas` - A sample SAS program file (e.g., performing a t-test analysis).
 
 ## How to Run
 
-### 1. Prerequisites
-Ensure you are logged into your HPC environment and have access to the Slurm scheduler and the SAS module.
-
-### 2. Submit the Job
-Use the `sbatch` command to submit the job script to the cluster queue:
-
-```
+### Submit the Job
+Use `sbatch` to submit the script to the cluster scheduler:
+```bash
 sbatch sas.submit
 ```
 
-## Monitoring and Results
+Check Job Status
+To monitor the progress of your job:
+```bash
+squeue --me --start
+```
 
-Once the job is submitted, Slurm will generate two files based on the **Job ID** (`%J`):
+## Script Breakdown
+sas.submit
 
-* **`sas_example.<JobID>.out`**: Contains the standard output and SAS listing.
-* **`sas_example.<JobID>.err`**: Contains any system errors or logs.
+```bash
 
+#!/bin/bash
+#SBATCH --partition=basic        
+#SBATCH --account=open           
+#SBATCH --nodes=1                # Run on a single compute node
+#SBATCH --ntasks-per-node=1      # Run a single task
+#SBATCH --mem=1gb                # Allocate 1 GB of memory
+#SBATCH --time=00:10:00          # Set a 10-minute time limit
+#SBATCH --job-name=sas_example   # Name of the job
+#SBATCH --error=sas_example.%j.err  # Error log file (%j is the job ID)
+#SBATCH --output=sas_example.%j.out # Output log file
+
+# Load the SAS environment module
+module load sas/9.4
+
+# Execute the SAS program in batch mode
+sas t-test.sas
+
+```

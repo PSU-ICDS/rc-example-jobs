@@ -1,41 +1,55 @@
-```markdown
-# STAR-CCM+ SLURM Job Scripts
+# STAR-CCM+ SLURM Job Examples for ICDS Roar Collab Cluster
 
-This repository contains ready-to-use SLURM batch scripts for running **STAR-CCM+ (v2502.0001)** on the Roar ICDS cluster.
+## Overview
+This directory contains example SLURM submission scripts for running Siemens STAR-CCM+ on the Roar Collab cluster. These examples cover single-node batch execution, multi-node MPI execution, and starting a STAR-CCM+ server for remote client connection.
 
-## Included Scripts
+## Files
+- `starccm.slurm` - Basic single-node batch execution script.
+- `starccm-mpi.slurm` - Multi-node execution using OpenMPI and a machinefile.
+- `starccm-server.slurm` - Script to start a STAR-CCM+ server for interactive use.
+- `test.sim` - Sample STAR-CCM+ simulation file.
 
-| Script                  | Description                                      | Mode        | Nodes | Cores/Node | Use Case                                      |
-|-------------------------|--------------------------------------------------|-------------|-------|------------|-----------------------------------------------|
-| `starccm.slurm`         | Single-node batch job                            | Batch       | 1     | 24         | Quick tests, small/medium simulations         |
-| `starccm-mpi.slurm`     | Multi-node MPI batch job (recommended)           | Batch + MPI | 4     | 24         | Large simulations across multiple nodes       |
-| `starccm-server.slurm`  | Multi-node server mode (remote GUI connection)   | Server      | 4     | 24         | Interactive / remote client connections       |
+## How to Run
 
-## Usage
-
-These scripts run the STAR-CCM+ simulation `test.sim` in different configurations:
-
-- **`starccm.slurm`** — runs on multiple cores within a **single node**
-- **`starccm-mpi.slurm`** — runs across **multiple nodes using MPI (OpenMPI)**
-- **`starccm-server.slurm`** — launches a **server session** for connection from the STAR-CCM+ GUI
-
-## Submitting Jobs
-
-Use `sbatch` to submit a job:
-
+### Submit a Batch Job
+To run a standard simulation in the background:
 ```bash
 sbatch starccm.slurm
+```
+
+### Submit a Multi-Node MPI Job
+To run a simulation across multiple nodes:
+```bash
 sbatch starccm-mpi.slurm
+```
+
+### Start a STAR-CCM+ Server
+To start a server instance (useful for connecting via a local STAR-CCM+ GUI):
+```bash
 sbatch starccm-server.slurm
+```
 
+## Script Breakdown
 
+### Single Node Batch (starccm.slurm)
 
-To connect to the StarCCM Server:
+Designed for jobs fitting within one compute node (24 cores).
+Uses starccm+ -batch to run without a GUI.
+Allocates 16GB of shared memory.
 
-1. Launch an interactive StarCCM job on [the portal](https://portal.hpc.psu.edu) using 
-same version as the batch job
-2. From inside the StarCCM interface, select "File" -> "Connect to Server"
-3. Place the host name (found from the `squeue -u $USER` output) in the "Host" box and 
-click on "Scan"
+### Multi-Node MPI (starccm-mpi.slurm)
 
+Scales the simulation across 4 nodes (24 total tasks).
+scontrol show hostname $SLURM_NODELIST > machinefile.txt: Generates a list of assigned compute nodes.
+-mpi openmpi: Specifies the MPI ecosystem.
+-machinefile machinefile.txt: Tells STAR-CCM+ exactly which nodes to use.
 
+### Server Mode (starccm-server.slurm)
+
+Starts the simulation engine and waits for a connection.
+-server: Instead of executing a file, it listens for an incoming connection from the STAR-CCM+ client.
+
+## Notes
+Modules: These scripts load starccm/2502.0001. Ensure this version is available or update the version string accordingly.
+Partitions: Scripts are set to --partition=basic and --account=open. Change these if you have access to a specific allocation or priority queue.
+Memory: The MPI and Server scripts use --mem-per-cpu=4GB, whereas the single-node script uses a flat --mem=16GB. Adjust based on your simulation's mesh size and physics complexity.

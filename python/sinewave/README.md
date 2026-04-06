@@ -1,73 +1,48 @@
-# Python SLURM Batch Job Example (Noisy Sine Plot)
+# Sine Wave Generation and Analysis Example for ICDS Roar Collab Cluster
 
-This repository contains a minimal example of generating and visualizing a noisy sine wave using Python on a SLURM-based cluster.
+## Overview
+This directory contains a Python-based workflow for generating a noisy sine wave signal, saving the data to a CSV, and subsequently reading that data to produce a visualization. It demonstrates the use of `numpy`, `pandas`, and `matplotlib` within the Anaconda environment on Roar Collab.
 
 ## Files
-
-### 1. `sub_nsin_py.submit`
-A SLURM batch script used to submit a Python job.
-
-**Key features:**
-- Requests 1 node, 2 CPU tasks, 1 GB memory per CPU
-- Sets a 1-minute runtime limit
-- Uses the `basic` partition and `open` account
-- Loads the Anaconda Python environment
-
-**Output files:**
-- `nsin_py.<jobid>.out` --- standard output
-- `nsin_py.<jobid>.err` --- error output
-
----
-
-### 2. `generate_nsin.py`
-A Python script that generates noisy sine wave data.
-
-**Steps performed:**
-1. Creates a sine wave signal
-2. Adds Gaussian noise
-3. Combines signal and noise
-4. Saves the data to:
- - `noiseysine.csv`
-
----
-
-### 3. `read_nsin.py`
-A Python script that reads the generated data and creates a plot.
-
-**Steps performed:**
-1. Loads data from `noiseysine.csv`
-2. Extracts `x` and `y` values
-3. Plots the noisy sine signal
-4. Formats x-axis in terms of ?
-5. Saves the figure as:
- - `py_noiseysine.png`
-
----
-
-### 4. `noiseysine.csv`
-A CSV file containing noisy sine wave data.
-
-**Contents:**
-- Column `x`: Input values
-- Column `y`: Noisy sine values
+- `sub_nsin_py.submit` - SLURM submission script using `srun` to execute the Python analysis.
+- `generate_nsin.py` - Script to generate synthetic sine wave data with Gaussian noise.
+- `read_nsin.py` - Script to read the generated CSV and plot the resulting signal.
+- `noiseysine.csv` - The intermediate data file containing coordinates.
 
 ## How to Run
 
-Submit the job to SLURM using:
-
-```
+### Submit the Job
+Use `sbatch` to submit the execution script:
+```bash
 sbatch sub_nsin_py.submit
 ```
 
+Check Job Status
+To monitor the progress of your job:
+```bash
+squeue --me --start
+```
 
-## Monitoring and Results
+## Script Breakdown
+sub_nsin_py.submit
 
-Once the job is submitted, SLURM will generate two files based on the **Job ID** (`%j`):
+```bash
+#!/bin/bash
 
-* **`nsin_py.<jobid>.out`**: Contains the Python execution output.
-* **`nsin_py.<jobid>.err`**: Contains any system errors or environment logs.
+#SBATCH --job-name=nsin_py           # Name of the job in the queue
+#SBATCH --account=open                
+#SBATCH --partition=basic             
+#SBATCH --nodes=1                     # Request 1 compute node
+#SBATCH --ntasks-per-node=2           # Request 2 tasks on the node
+#SBATCH --mem-per-cpu=1GB             # Allocate 1GB of RAM per CPU core
+#SBATCH --time=00:01:00               # Set a 1-minute time limit
+#SBATCH --output=nsin_py.%j.out       # Standard output log (%j = job ID)
+#SBATCH --error=nsin_py.%j.err        # Standard error log
 
-### Generated Output
+# Load the Anaconda environment to access scientific libraries
+module load anaconda3
 
-- `noiseysine.csv`: Generated dataset (if running `generate_nsin.py`)
-- `py_noiseysine.png`: Plot of the noisy sine function
+# Execute the reading and plotting script using srun
+srun python read_nsin.py
+
+```

@@ -7,8 +7,11 @@
 #SBATCH --cpus-per-task=64                           # Number of CPU cores per task (adjust based on desired concurrency)
 #SBATCH --time=02:00:00                             # Time limit hrs:min:sec
 #SBATCH --mem=16G                                   # Memory limit per nodes
+#SBATCH -A open
+#SBATCH -p basic
 
 # Run java
+module load jdk
 java ParallelMatrixMultiplication.java
 
 

@@ -5,8 +5,12 @@
 #SBATCH --error=serial_matrix_multiplication.%J.err          # Output file for stderr
 #SBATCH --ntasks=1                                 # Number of tasks (1 serial task)
 #SBATCH --cpus-per-task=1                          # Only one CPU core (serial execution)
-#SBATCH --time=01:00:00                            # Time limit hrs:min:sec
+#SBATCH --time=00:25:00                            # Time limit hrs:min:sec
 #SBATCH --mem=16G                                   # Memory limit (adjust if necessary)
+#SBATCH -A open
+#SBATCH -p basic
+
+module load jdk
 
 # Run the Java program
 java SerialMatrixMultiplication.java

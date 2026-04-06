@@ -1,47 +1,63 @@
-# Stata SLURM Batch Job Example
+# Stata SLURM Job Example for ICDS Roar Collab Cluster
 
-This repository contains a minimal example of running a Stata job on the Roar ICDS cluster.
+## Overview
+
+This directory contains an example of submitting a **Stata** job using SLURM on the ICDS Roar Collab cluster. The script loads the Stata module and runs a Stata do-file in batch mode (`-b` flag) for non-interactive execution.
+
+This is a simple single-node, multi-core Stata job suitable for most standard statistical analyses.
 
 ## Files
 
-### 1. `stata.submit`
-A SLURM batch script used to submit a Stata job.
-
-**Key features:**
-- Requests 1 node, 4 CPU tasks, 2 GB memory
-- Sets a 5-minute runtime limit
-- Loads Stata 19 module
-
-**Output files:**
-- `stata_test_<jobid>.out` — standard output
-- `stata_test_<jobid>.err` — error output
-
-
----
-
-### 2. `auto_analysis.do`
-A Stata do-file that performs a simple analysis.
-
-**Steps performed:**
-1. Clears memory and disables output pauses
-2. Loads Stata’s built-in `auto` dataset
-3. Generates summary statistics for:
- - price
- - mpg
- - weight
+- `stata.submit` - SLURM submission script for running Stata
+- `auto_analysis.do` - Example Stata do-file (assumed to exist in the same directory)
 
 ## How to Run
 
-Submit the job to SLURM using:
+Submit the job with:
 
-```
+```bash
 sbatch stata.submit
 ```
 
-## Monitoring and Results
+Check job status:
 
-Once the job is submitted, SLURM will generate two files based on the **Job ID** (`%J`):
+```bash
+squeue --me --start
+```
 
-* **`stata_test_<jobid>.out`**: Contains the standard output and the Stata results log.
-* **`stata_test_<jobid>.err`**: Contains any system errors or environment logs.
+or for the specific job:
 
+```bash
+squeue -j <job_id>
+```
+
+View output once the job completes:
+
+```bash
+cat stata_test_<job_id>.out
+```
+
+## Script Breakdown
+
+stata.submit
+
+```bash
+
+#!/bin/bash
+#SBATCH --job-name=stata_test
+#SBATCH --time=00:05:00
+#SBATCH --ntasks-per-node=4
+#SBATCH --nodes=1
+#SBATCH --mem=2G
+#SBATCH --output=stata_test_%j.out
+#SBATCH --error=stata_test_%j.err
+#SBATCH --partition=basic
+#SBATCH --account=open
+
+# Load Stata module (adjust version to your requirements)
+module load stata/19
+
+# Run Stata in batch (non-interactive) mode
+stata-se -b do auto_analysis.do
+
+```
