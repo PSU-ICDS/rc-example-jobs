@@ -31,11 +31,11 @@ squeue -j <job_id>
 
 ## Script Breakdown
 
-### fluent.slurm (Serial)
+### fluent.slurm (Parallel)
 
 ```bash
 #!/bin/bash
-#SBATCH --ntasks=1                         # Run 1 task (serial)
+#SBATCH --ntasks=10                         # Run 10 parallel tasks
 #SBATCH --nodes=1                          # Use 1 node
 #SBATCH --time=10:00:00                    # Allocate 10 hours
 #SBATCH --mem-per-cpu=4gb                  # Allocate 4 GB per CPU
@@ -44,32 +44,52 @@ squeue -j <job_id>
 
 module load ansys                           # Load ANSYS module (includes Fluent)
 
-fluent 2ddp -i in.file -g                   # Run Fluent in 2D double precision
+FLUENTNODES="$(scontrol show hostnames)"   # Get list of allocated nodes
+
+fluent 2ddp -t${SLURM_NTASKS} \
+            -i in.file \
+            -cnf=$FLUENTNODES \
+            -g                              # Run Fluent in 2D double precision
+                                            # -t: number of processors
                                             # -i: input journal file
+                                            # -cnf: node configuration for MPI
                                             # -g: graphics off (batch mode)
 ```
 
-### fluent-mpi.slurm (MPI Parallel)
+### fluent-mpi.slurm (Multi-Node MPI Parallel)
 
 ```bash
 #!/bin/bash
-#SBATCH --ntasks=10                        # Run 10 MPI tasks
-#SBATCH --nodes=1                          # Use 1 node (all on same node)
+#SBATCH --nodes=2                          # Use 2 nodes
+#SBATCH --ntasks-per-node=20               # Run 20 MPI tasks per node (total 40)
 #SBATCH --time=10:00:00                    # Allocate 10 hours
 #SBATCH --mem-per-cpu=4gb                  # Allocate 4 GB per CPU
+#SBATCH --account=open                     # Charging to this account
 #SBATCH --error=fluent.%J.err              # Error log
 #SBATCH --output=fluent.%J.out             # Output log
 
-module load ansys                           # Load ANSYS module
+module load ansys openmpi                   # Load ANSYS and OpenMPI modules
 
-FLUENTNODES="$(scontrol show hostnames)"   # Get list of allocated nodes
+scontrol show hostnames > hosts.$SLURM_JOB_ID  # Write node names to file
 
-# Run Fluent with MPI parallelization
-fluent 2ddp \                               # 2D, double precision
-       -t${SLURM_NTASKS} \                  # Number of processors (-t = total)
-       -i in.file \                         # Input journal file
-       -cnf=$FLUENTNODES \                  # Node configuration for MPI
-       -g                                   # Graphics off (batch mode)
+export FLUENT_AFFINITY=0                    # Disable FLUENT affinity
+export SLURM_ENABLED=1                      # Enable SLURM integration
+export SCHEDULER_TIGHT_COUPLING=1           # Enable tight coupling
+export ANSYS232_PRODUCT=aa_r                # Set ANSYS product
+
+# Run Fluent with MPI parallelization across nodes
+fluent 2ddp -t ${SLURM_NTASKS} \
+            -mpi=openmpi \
+            -slurm \
+            -g \
+            -p inifiniband \
+            -cnf=hosts.$SLURM_JOB_ID \
+            -i in.file >& out.dat           # 2D double precision with OpenMPI
+                                            # -t: total number of processors
+                                            # -mpi=openmpi: use OpenMPI
+                                            # -slurm: enable SLURM
+                                            # -cnf: node configuration file
+                                            # -i: input journal file
 ```
 
 ## Notes

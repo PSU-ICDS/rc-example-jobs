@@ -40,9 +40,9 @@ sbatch ansys-mpi.submit
 #SBATCH --nodes=1                          # Use 1 compute node
 #SBATCH --ntasks-per-node=1                # Run 1 task per node
 #SBATCH --time=10:00                       # Allocate 10 minutes of wall time
-#SBATCH --mem=2gb                          # Allocate 2 GB of memory
-#SBATCH --account=test_credits_iask        # Charge to this account
-#SBATCH --partition=himem                  # Use high memory partition
+#SBATCH --mem=4gb                          # Allocate 4 GB of memory
+#SBATCH --account=open                     # Charge to this account
+#SBATCH --partition=basic                  # Use basic partition
 #SBATCH --output=ansys.%j.%a.out           # Output log (j=job_id, a=array_index)
 #SBATCH --error=ansys.%j.%a.err            # Error log
 #SBATCH --array=1-100                      # Create 100 array jobs
@@ -63,5 +63,5 @@ ansys232 -b \                               # Run ANSYS in batch mode (no GUI)
 
 - The `#SBATCH --array=1-100` directive creates 100 parallel job array tasks, useful for parameter sweeps
 - Each array task gets its own unique input and output files to prevent conflicts
-- The `himem` partition provides high-memory nodes suitable for large ANSYS simulations
+- The `basic` partition is used for this example; use `himem` for large simulations requiring more memory
 - Modify the input file `example.inp` with your own ANSYS commands

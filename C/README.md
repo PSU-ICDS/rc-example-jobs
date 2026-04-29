@@ -36,11 +36,10 @@ sbatch mpi.slurm
 ```bash
 #!/bin/bash
 #SBATCH --mem-per-cpu=1024                 # Allocate 1024 MB per CPU
-#SBATCH --ntasks=1                         # Run 1 task
 #SBATCH --time=00:01:00                    # Allocate 1 minute of wall time
-#SBATCH --job-name=serial                  # Name of the job
-#SBATCH --error=serial.%J.err              # Error log
-#SBATCH --output=serial.%J.out             # Output log
+#SBATCH --job-name=C                       # Name of the job
+#SBATCH --error=C.%J.err                   # Error log
+#SBATCH --output=C.%J.out                  # Output log
 
 module load gcc                             # Load GCC compiler
 
@@ -52,17 +51,17 @@ rm demo_c_serial                            # Clean up executable
 ### openmp.slurm
 ```bash
 #!/bin/bash
+#SBATCH --ntasks=5                         # Run 5 tasks
 #SBATCH --mem-per-cpu=1024                 # Allocate 1024 MB per CPU
-#SBATCH --ntasks=1                         # Run 1 task
 #SBATCH --time=00:01:00                    # Allocate 1 minute
-#SBATCH --job-name=openmp                  # Name of the job
-#SBATCH --error=openmp.%J.err              # Error log
-#SBATCH --output=openmp.%J.out             # Output log
+#SBATCH --job-name=omp                     # Name of the job
+#SBATCH --error=omp.%J.err                 # Error log
+#SBATCH --output=omp.%J.out                # Output log
 
+export OMP_NUM_THREADS=5                    # Set OpenMP threads to 5
 module load gcc                             # Load GCC compiler
 
-gcc -fopenmp demo_c_openmp.c -o demo_c_openmp  # Compile with OpenMP support
-export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK   # Set OpenMP threads
+gcc demo_c_openmp.c -o demo_c_openmp -fopenmp  # Compile with OpenMP support
 ./demo_c_openmp                             # Run the program
 rm demo_c_openmp                            # Clean up executable
 ```

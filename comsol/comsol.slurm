@@ -6,7 +6,7 @@
 #SBATCH --error=comsol.%J.err
 #SBATCH --output=comsol.%J.out
 #SBATCH --partition=standard
-#SBATCH --account=test_credits_iask
+#SBATCH --account=open
 
 module load comsol
 comsol batch -inputfile effective_diffusivity.mph -outputfile effective_diffusivity_OUT.mph -np ${SLURM_NTASKS_PER_NODE}

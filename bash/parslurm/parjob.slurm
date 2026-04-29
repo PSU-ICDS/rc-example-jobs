@@ -2,7 +2,6 @@
 
 #SBATCH --job-name=parallel_example
 #SBATCH --account=open
-#SBATCH --partition=open
 #SBATCH --nodes=4-4
 #SBATCH --ntasks-per-node=2
 #SBATCH --mem-per-cpu=100mb

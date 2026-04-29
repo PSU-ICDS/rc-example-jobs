@@ -30,13 +30,13 @@ scontrol show job <jobid>
 ```bash
 #!/bin/bash
 #SBATCH --nodes=1                          # Use 1 compute node
-#SBATCH --ntasks-per-node=1                # Run 1 task per node
-#SBATCH --time=00:10:00                    # Allocate 10 minutes of wall time
-#SBATCH --mem=2gb                          # Allocate 2 GB of memory
-#SBATCH --account=test_credits_iask        # Charge to this account
-#SBATCH --partition=open                   # Use open partition
-#SBATCH --output=gams.%J.out               # Output log (J=job_id)
-#SBATCH --error=gams.%J.err                # Error log
+#SBATCH --ntasks=4                         # Run 4 tasks
+#SBATCH --time=10:00                       # Allocate 10 hours of wall time
+#SBATCH --mem=8GB                          # Allocate 8 GB of memory
+#SBATCH --output=gams.%j.out               # Output log (j=job_id)
+#SBATCH --error=gams.%j.err                # Error log
+#SBATCH --job-name=gams_example            # Job name
+#SBATCH --account=open                     # Charge to this account
 
 module load gams                            # Load GAMS module
 

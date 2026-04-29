@@ -2,9 +2,9 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=10:00
-#SBATCH --mem=2gb
-#SBATCH --account=test_credits_iask
-#SBATCH --partition=himem
+#SBATCH --mem=4gb
+#SBATCH --account=open
+#SBATCH --partition=basic
 #SBATCH --output=ansys.%j.%a.out
 #SBATCH --error=ansys.%j.%a.err
 #SBATCH --array=1-100
