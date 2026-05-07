@@ -2,9 +2,10 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=10:00
-#SBATCH --mem=10gb
-#SBATCH --partition=open
-#SBATCH --output=R-matlab.%j.out
+#SBATCH --mem=10GB
+#SBATCH --partition=basic
+#SBATCH --account=open
+#SBATCH --output=matlab.%j.out
 #SBATCH --error=matlab.%j.err
 
 # Load matlab

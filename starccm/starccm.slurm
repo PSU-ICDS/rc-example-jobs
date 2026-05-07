@@ -5,7 +5,8 @@
 #SBATCH --ntasks-per-node=24 
 #SBATCH --mem=16GB
 #SBATCH --time=01:00:00 
-#SBATCH --partition=open 
+#SBATCH --partition=basic
+#SBATCH --account=open
 #SBATCH --output=starccm.%j.out
 #SBATCH --output=starccm.%j.err
 

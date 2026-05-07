@@ -2,11 +2,13 @@
 
 #SBATCH --job-name=nsin_py
 #SBATCH --account=open
+#SBATCH --partition=basic
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=2
 #SBATCH --mem-per-cpu=1GB
 #SBATCH --time=00:01:00
-#SBATCH --output=%x.%j.out
+#SBATCH --output=nsin_py.%j.out
+#SBATCH --error=nsin_py.%j.err
 
 module load anaconda3
 

@@ -6,7 +6,8 @@
 #SBATCH --mem=2G
 #SBATCH --output=stata_test_%j.out
 #SBATCH --error=stata_test_%j.err
-#SBATCH --partition=open
+#SBATCH --partition=basic
+#SBATCH --account=open
 
 # Load Stata module (adjust to your cluster)
 module load stata/19

@@ -3,7 +3,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=10:00
 #SBATCH --mem=10gb
-#SBATCH --partition=standard
+#SBATCH --partition=basic
 #SBATCH --account=open
 #SBATCH --output=R-normalize.%j.out
 #SBATCH --error=R-normalize.%j.err
