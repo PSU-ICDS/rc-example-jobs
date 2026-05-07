@@ -7,7 +7,6 @@
 #SBATCH --error=gams.%j.err
 #SBATCH --job-name=gams_example
 #SBATCH --account=open
-#SBATCH --partition=open
 
 module load gams
 

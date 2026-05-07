@@ -1,6 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name g16
-#SBATCH --nodes=1 --ntasks-per-node=4
+#SBATCH --nodes=1 
+#SBATCH --ntasks-per-node=4
 #SBATCH --mem-per-cpu=2000
 #SBATCH --time=10:00
 #SBATCH --error=gaussian.%J.err
