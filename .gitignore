@@ -3,3 +3,5 @@
 /**/*.log
 /**/output/*
 /**/machinefile.txt
+/**/*.bt2
+/**/*.sam

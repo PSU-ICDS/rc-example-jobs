@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#### Scheduler Directives ####
+#SBATCH --account=open
+#SBATCH --partition=basic
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
+#SBATCH --time=01:00:00
+#SBATCH --mem-per-cpu=4G
+#SBATCH --output=bioperl_%j.out
+#SBATCH --error=bioperl_%j.err
+
+module unuse /storage/icds/sw8/modulefiles/Core
+module use /storage/icds/sw8/modulefiles_26/Core
+module load bowtie2/2.5.4
+
+# index reference genome
+bowtie2-build --threads=${SLURM_NTASKS} sequences/lambda_virus.fa lambda_virus
+
+# align paired end reads
+bowtie2 --threads=${SLURM_NTASKS} -x lambda_virus -1 sequences/reads_1.fq -2 sequences/reads_2.fq -S eg2.sam
