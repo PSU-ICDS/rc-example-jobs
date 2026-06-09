@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#### Scheduler Directives ####
+#SBATCH --account=open
+#SBATCH --partition=standard
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --time=10:00:00
+#SBATCH --mem=16G
+#SBATCH --gres=gpu:p100:1
+#SBATCH --output=amber-cuda_%j.out
+#SBATCH --error=amber-cuda_%j.err
+
+module unuse /storage/icds/sw8/modulefiles/Core
+module use /storage/icds/sw8/modulefiles_26/Core
+module load gcc/13.4.0  openmpi/5.0.7-cuda amber/24-cuda
+
+export CUDA_VISIBLE_DEVICES=0
+
+pmemd.cuda -O -i md.mdin -p RAMP1.prmtop -c RAMP1_eq7.rst7\
+ -ref RAMP1_eq7.rst7 -o RAMP1_md.mdout -r RAMP1_md.rst7 -x RAMP1_md.nc
