@@ -1,6 +1,6 @@
 # BioPerl Example
 
-This script runs a basic GenBank query using the Perl BioPerl package.
+This script runs a basic GenBank query using the Perl BioPerl package from https://bioperl.org/howtos/Beginners_HOWTO.html#item4
 
 Files:
  - setup.sh: this script sets up a user-level perl library and installs the package Bio::DB::GenBank
