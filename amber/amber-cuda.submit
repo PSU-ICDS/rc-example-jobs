@@ -13,7 +13,7 @@
 
 module unuse /storage/icds/sw8/modulefiles/Core
 module use /storage/icds/sw8/modulefiles_26/Core
-module load gcc/13.4.0  openmpi/5.0.7-cuda amber/24-cuda
+module load gcc/13.4.0 openmpi/5.0.7 amber/24-cuda
 
 export CUDA_VISIBLE_DEVICES=0
 
