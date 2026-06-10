@@ -1,0 +1,11 @@
+&HEAD CHID='Job_1', TITLE='Our first FDS simulation' /
+&MESH XB=0,2,0,4,0,2.5, IJK=20,40,25/
+&TIME T_END = 60. /
+&DUMP NFRAMES=60 /
+&VENT XB=0.5,1.5,4,4,0,2, SURF_ID='OPEN'/
+&REAC FUEL = 'PROPANE' /
+&OBST XB = 0.5,1.5,1.5,2.5,0,0.5, SURF_ID = 'Fire'/
+&SURF ID = 'Fire', HRRPUA = 600/
+&DEVC ID = 'Air Temperature', XYZ = 1,2,1.5, QUANTITY = 'TEMPERATURE' /
+&SLCF PBY = 2, QUANTITY = 'TEMPERATURE' /
+&TAIL /

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#### Scheduler Directives ####
+#SBATCH --account=open
+#SBATCH --partition=basic
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --time=20:00
+#SBATCH --mem=8G
+#SBATCH --output=fds_%j.out
+#SBATCH --error=fds_%j.err
+
+module unuse /storage/icds/sw8/modulefiles/Core
+module use /storage/icds/sw8/modulefiles_26/Core
+module load gcc/13.4.0 openmpi/5.0.7 fds/6.9.1
+
+fds in.fds
