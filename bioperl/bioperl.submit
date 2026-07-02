@@ -10,8 +10,6 @@
 #SBATCH --output=bioperl_%j.out
 #SBATCH --error=bioperl_%j.err
 
-module unuse /storage/icds/sw8/modulefiles/Core
-module use /storage/icds/sw8/modulefiles_26/Core
 module load bioperl/1.7.8
 
 # set up user perl library

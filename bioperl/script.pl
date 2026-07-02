@@ -1,4 +1,4 @@
-use lib '/storage/icds/sw8/pkg/linux-x86_64_v3/perl-bioperl-1.7.8-cre44dradvvfzoijertdjjdlxnoivayn/lib/perl5';
+use lib $ENV{PERL5LIB};
 use Bio::DB::GenBank;
 use Bio::DB::Query::GenBank;
 
