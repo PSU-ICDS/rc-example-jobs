@@ -8,8 +8,8 @@
 #SBATCH --partition=basic
 #SBATCH --account=open
 #SBATCH --output=starccm.%j.out
-#SBATCH --output=starccm.%j.err
+#SBATCH --error=starccm.%j.err
 
-module load starccm/2502.0001
+module load starccm/2510
 
 starccm+ -batch -np $SLURM_NTASKS test.sim

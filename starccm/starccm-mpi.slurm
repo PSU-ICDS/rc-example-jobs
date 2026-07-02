@@ -10,8 +10,8 @@
 #SBATCH --output=starccm-mpi.%j.out
 #SBATCH --error=starccm-mpi.%j.err
 
-module load starccm/2502.0001 openmpi
+module load starccm/2510
 
-scontrol show hostname $SLURM_NODELIST > machinefile.txt
+scontrol show hostname $SLURM_NODELIST > machinefile2.txt
 
-starccm+ -batch -np $SLURM_NTASKS -mpi openmpi -machinefile machinefile.txt test.sim
+starccm+ -batch -np $SLURM_NTASKS -mpi openmpi -machinefile machinefile2.txt test.sim
