@@ -7,11 +7,9 @@
 #SBATCH --ntasks-per-node=4
 #SBATCH --time=01:00:00
 #SBATCH --mem-per-cpu=4G
-#SBATCH --output=bioperl_%j.out
-#SBATCH --error=bioperl_%j.err
+#SBATCH --output=bowtie2_%j.out
+#SBATCH --error=bowtie2_%j.err
 
-module unuse /storage/icds/sw8/modulefiles/Core
-module use /storage/icds/sw8/modulefiles_26/Core
 module load bowtie2/2.5.4
 
 # index reference genome
