@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=20
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=2
 #SBATCH --time=10:00:00
 #SBATCH --mem-per-cpu=4gb
 #SBATCH --account=open
