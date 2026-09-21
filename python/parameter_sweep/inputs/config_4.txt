@@ -1,0 +1,3 @@
+# Sweep configuration 4 of 10, read by run_sweep.py.
+# Format: one 'param=<integer>' line; blank lines and # comments are ignored.
+param=6
