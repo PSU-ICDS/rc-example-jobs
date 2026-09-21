@@ -12,7 +12,7 @@ This repository demonstrates the performance difference between serial and paral
 
 The scripts generate two random $2000 \times 2000$ matrices and compute their product.
 * **Serial**: Uses the standard `%*%` operator on a single thread.
-* **Parallel**: Detects available cores, splits the matrix into row chunks, and processes them simultaneously using `mclapply`.
+* **Parallel**: Takes the core count as a command line argument (passed from `$SLURM_NTASKS_PER_NODE` by the submit script), splits the matrix into row chunks, and processes them simultaneously using `mclapply`.
 
 ## How to Run
 
@@ -33,7 +33,7 @@ Once the job is submitted, Slurm will generate several log files based on the **
 
 ## Customization Tips
 
-* **Adjust Parallelism**: Modify `--ntasks-per-node` in the submit script to change the number of cores allocated for the parallel task.
+* **Adjust Parallelism**: Modify `--ntasks-per-node` in the submit script to change the number of cores allocated for the parallel task. The core count is passed automatically to the R script via `$SLURM_NTASKS_PER_NODE`, so no change to the `.R` file is needed.
 * **Scale the Workload**: Increase the `N` variable (currently 2000) in both `.R` files to test how parallelization handles larger datasets.
 * **Memory Management**: If you increase `N`, ensure you also increase `--mem` in the submit script, as matrix multiplication is memory-intensive.
 * **Live Monitoring**: Use `tail -f summary_<JOB_ID>.log` to see the final comparison as soon as both scripts finish executing.

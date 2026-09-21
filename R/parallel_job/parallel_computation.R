@@ -4,7 +4,16 @@
 library(parallel)
 
 N <- 2000  # Size of the matrix
-num_cores <- detectCores() - 1  # Use all available cores minus one
+
+# Number of cores is passed as the first command line argument (from the
+# Slurm submit script). Fall back to all available cores minus one if absent.
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) >= 1) {
+  num_cores <- as.integer(args[1])
+} else {
+  num_cores <- detectCores() - 1
+}
+cat("Using", num_cores, "cores.\n")
 
 # Create two random matrices
 matrix_a <- matrix(runif(N * N), nrow = N, ncol = N)

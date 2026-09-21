@@ -19,9 +19,10 @@ end_serial=$(date +%s)
 serial_time=$(( end_serial - start_serial ))
 echo "Serial computation time: $serial_time seconds" >> serial_computation_$SLURM_JOB_ID.log
 
-# Run the parallel R script
+# Run the parallel R script, passing the number of cores allocated by Slurm
+# as a command line argument so the script matches the job request
 start_parallel=$(date +%s)
-Rscript parallel_computation.R > parallel_computation_$SLURM_JOB_ID.log
+Rscript parallel_computation.R $SLURM_NTASKS_PER_NODE > parallel_computation_$SLURM_JOB_ID.log
 end_parallel=$(date +%s)
 parallel_time=$(( end_parallel - start_parallel ))
 echo "Parallel computation time: $parallel_time seconds" >> parallel_computation_$SLURM_JOB_ID.log
