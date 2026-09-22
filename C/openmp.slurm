@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --ntasks=5
+#SBATCH --ntasks-per-node=5
 #SBATCH --mem-per-cpu=1024
 #SBATCH --time=00:01:00
 #SBATCH --job-name=omp
