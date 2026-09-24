@@ -16,19 +16,7 @@ Here is a list of links and tutorial video that will be helpful to you if you ar
 
 * The Roar User's Guide:
 
-  * https://www.icds.psu.edu/computing-services/roar-user-guide/
-
-* The Roar Training Series:
-
-  * https://www.icds.psu.edu/computing-services/roar-training-series/
-
-* Roar on demand Tutorial Videos:
-
-  * https://www.icds.psu.edu/computing-services/roar-training-resources/roar-on-demand-tutorial-videos/
-
-* Adaptive Computing's documentation for PBS:
-
-  * http://docs.adaptivecomputing.com/torque/4-0-2/Content/topics/commands/qsub.htm
+  * https://docs.icds.psu.edu
 
 # Contributing
 
